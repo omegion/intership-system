@@ -38,6 +38,10 @@ services:
       MYSQL_ROOT_PASSWORD: secret
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
+    volumes:
+      - type: volume
+        source: database
+        target: /var/lib/mysql
     networks:
       - laravel
 
@@ -119,3 +123,6 @@ services:
       - 8025:8025
     networks:
       - laravel
+
+volumes:
+  database:

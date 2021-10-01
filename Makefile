@@ -15,3 +15,5 @@ composer:
 npm:
 	docker-compose run --rm npm $(call args)
 
+npm-hot:
+	cd src && npm run hot

@@ -27,3 +27,10 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
+
+Route::middleware(['auth:sanctum', 'verified'])->prefix('company')->name('company.')->group(function () {
+    Route::get('/list', function () {
+        return Inertia::render('Company/List');
+
+    })->name('list');
+});

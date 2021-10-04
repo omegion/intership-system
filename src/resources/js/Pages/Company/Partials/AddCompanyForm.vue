@@ -1,64 +1,13 @@
 <template>
-  <t-form-section @submitted="updateProfileInformation">
-    <template #title>Profile Information</template>
+  <t-form-section @submitted="storeCompany">
+    <template #title>Company Information</template>
 
     <template #description>
-      Update your account's profile information and email address.
+      Define information about the company. It is important that you provide
+      valid information.
     </template>
 
     <template #form>
-      <!-- Profile Photo -->
-      <div
-        class="col-span-6 sm:col-span-4"
-        v-if="$page.props.jetstream.managesProfilePhotos"
-      >
-        <!-- Profile Photo File Input -->
-        <input
-          type="file"
-          class="hidden"
-          ref="photo"
-          @change="updatePhotoPreview"
-        />
-
-        <jet-label for="photo" value="Photo" />
-
-        <!-- Current Profile Photo -->
-        <div class="mt-2" v-show="!photoPreview">
-          <img
-            :src="user.profile_photo_url"
-            :alt="user.name"
-            class="rounded-full h-20 w-20 object-cover"
-          />
-        </div>
-
-        <!-- New Profile Photo Preview -->
-        <div class="mt-2" v-show="photoPreview">
-          <span
-            class="block rounded-full w-20 h-20 bg-cover bg-no-repeat bg-center"
-            :style="'background-image: url(\'' + photoPreview + '\');'"
-          ></span>
-        </div>
-
-        <jet-secondary-button
-          class="mt-2 mr-2"
-          type="button"
-          @click.prevent="selectNewPhoto"
-        >
-          Select A New Photo
-        </jet-secondary-button>
-
-        <jet-secondary-button
-          type="button"
-          class="mt-2"
-          @click.prevent="deletePhoto"
-          v-if="user.profile_photo_path"
-        >
-          Remove Photo
-        </jet-secondary-button>
-
-        <jet-input-error :message="form.errors.photo" class="mt-2" />
-      </div>
-
       <!-- Name -->
       <div class="col-span-6 sm:col-span-4">
         <jet-label for="name" value="Name" />
@@ -68,6 +17,7 @@
           class="mt-1 block w-full"
           v-model="form.name"
           autocomplete="name"
+          placeholder="Example Company"
         />
         <jet-input-error :message="form.errors.name" class="mt-2" />
       </div>
@@ -80,6 +30,8 @@
           type="email"
           class="mt-1 block w-full"
           v-model="form.email"
+          autocomplete="email"
+          placeholder="example@company.com"
         />
         <jet-input-error :message="form.errors.email" class="mt-2" />
       </div>
@@ -126,10 +78,9 @@ export default defineComponent({
   data() {
     return {
       form: this.$inertia.form({
-        _method: 'PUT',
-        name: this.user.name,
-        email: this.user.email,
-        photo: null
+        _method: 'POST',
+        name: '',
+        email: ''
       }),
 
       photoPreview: null
@@ -137,13 +88,9 @@ export default defineComponent({
   },
 
   methods: {
-    updateProfileInformation() {
-      if (this.$refs.photo) {
-        this.form.photo = this.$refs.photo.files[0]
-      }
-
-      this.form.post(route('user-profile-information.update'), {
-        errorBag: 'updateProfileInformation',
+    storeCompany() {
+      this.form.post(route('company.store'), {
+        errorBag: 'storeCompany',
         preserveScroll: true,
         onSuccess: () => this.clearPhotoFileInput()
       })

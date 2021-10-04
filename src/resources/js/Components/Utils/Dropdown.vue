@@ -1,18 +1,16 @@
 <template>
-  <div class="relative">
-    <el-dropdown :hide-on-click="false" :trigger="trigger">
-      <span class="el-dropdown-link">
-        <slot name="trigger"></slot>
-      </span>
-      <template #dropdown>
-        <el-dropdown-menu
-          class="rounded-md w-48 ring-1 ring-black ring-opacity-5"
-        >
-          <slot name="content"></slot>
-        </el-dropdown-menu>
-      </template>
-    </el-dropdown>
-  </div>
+  <el-dropdown :hide-on-click="false" :trigger="trigger">
+    <span class="el-dropdown-link">
+      <slot name="trigger"></slot>
+    </span>
+    <template #dropdown>
+      <el-dropdown-menu
+        :class="[width, 'rounded-md ring-1 ring-black ring-opacity-5']"
+      >
+        <slot name="content"></slot>
+      </el-dropdown-menu>
+    </template>
+  </el-dropdown>
 </template>
 
 <script>
@@ -26,7 +24,16 @@ export default defineComponent({
   props: {
     trigger: {
       default: 'click'
+    },
+    width: {
+      default: 'w-48'
     }
   }
 })
 </script>
+
+<style>
+.el-dropdown {
+  color: inherit;
+}
+</style>

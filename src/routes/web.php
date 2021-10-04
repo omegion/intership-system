@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CompanyController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -29,8 +30,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::middleware(['auth:sanctum', 'verified'])->prefix('company')->name('company.')->group(function () {
-    Route::get('/list', function () {
-        return Inertia::render('Company/List');
-
-    })->name('list');
+    Route::get('/list', [CompanyController::class, 'index'])->name('list');
+    Route::get('/add', [CompanyController::class, 'add'])->name('add');
+    Route::post('/add', [CompanyController::class, 'store'])->name('store');
+    Route::get('/{company:slug}', [CompanyController::class, 'show'])->name('show');
 });

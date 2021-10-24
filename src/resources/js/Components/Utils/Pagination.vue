@@ -25,7 +25,7 @@ export default {
   },
   setup(props, root) {
     const handleCurrentChange = (val) => {
-      Inertia.replace(`${props.path}?page=${val}`)
+      Inertia.get(`${props.path}?page=${val}`)
     }
 
     return {

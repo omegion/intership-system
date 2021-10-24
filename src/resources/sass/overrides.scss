@@ -1,0 +1,102 @@
+// DIALOG
+.el-message-box {
+    padding-bottom: 0;
+
+    @apply rounded-lg
+}
+
+.el-message-box {
+    &__title {
+        @apply text-xl font-medium
+    }
+
+    &__btns {
+        @apply px-6 py-4 bg-gray-100 text-right;
+    }
+
+    &__content {
+        @apply p-4 py-6 text-base text-black
+    }
+}
+
+//BUTTON
+.el-button {
+    @apply inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:bg-gray-50 focus:border-gray-300 focus:text-gray-700
+}
+
+.el-button {
+    &.submit {
+        @apply uppercase tracking-widest bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white hover:bg-gray-700
+    }
+
+    &--primary {
+        @apply border-transparent text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none #{!important};
+    }
+
+    &--success {
+        @apply border-transparent text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-green-500 #{!important};
+    }
+
+    &--danger {
+        @apply border-transparent text-sm font-medium text-white bg-red-600 hover:bg-red-500 focus:outline-none focus:ring-red-500 #{!important};
+    }
+}
+
+// MENU
+.el-menu {
+    background-color: inherit;
+    border-right: 0;
+
+    .el-menu-item {
+        height: inherit;
+        padding: inherit;
+
+        &:hover {
+            background-color: inherit;
+        }
+
+        &.is-active {
+            a {
+                @apply bg-gray-200 text-gray-900
+            }
+        }
+
+        a {
+            @apply text-gray-700 hover:text-gray-900 hover:bg-gray-50 flex items-center px-3 py-2 my-1 text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500
+        }
+    }
+
+    .el-sub-menu {
+        .el-menu-item {
+            padding: inherit;
+            height: inherit;
+        }
+
+        .el-sub-menu__title {
+            .sub-menu-item {
+                @apply text-gray-700 hover:text-gray-900 hover:bg-gray-50 flex items-center px-3 py-2 my-1 text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500
+            }
+        }
+    }
+
+    .el-sub-menu__title {
+        height: inherit;
+        padding: inherit;
+
+        &:hover {
+            background-color: inherit;
+        }
+    }
+}
+
+//POPOVER
+.el-popover {
+    @apply rounded-md border-gray-300 shadow #{!important}
+}
+
+// INPUT
+.el-input {
+    .el-input__inner {
+        @apply border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow  block w-full
+    }
+}

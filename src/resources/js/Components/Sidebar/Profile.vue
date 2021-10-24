@@ -66,11 +66,16 @@
         </template>
         <template #content>
           <t-dropdown-item :href="route('profile.show')">
+            <UserIcon
+              class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+            />
             View profile
           </t-dropdown-item>
-          <t-dropdown-item :href="route('company.list')">
-            View profile
-          </t-dropdown-item>
+          <form @submit.prevent="logout">
+            <t-dropdown-item :href="route('company.list')" as="button" divided>
+              Logout
+            </t-dropdown-item>
+          </form>
         </template>
       </t-dropdown>
     </div>
@@ -80,19 +85,19 @@
 <script>
 import { defineComponent } from 'vue'
 import JetApplicationMark from '@/Components/Utils/ApplicationMark.vue'
-import JetBanner from '@/Components/Utils/Banner.vue'
 import TNavLink from '@/Components/Utils/NavLink.vue'
 import JetResponsiveNavLink from '@/Components/Utils/ResponsiveNavLink.vue'
 import TDropdown from '@/Components/Utils/Dropdown.vue'
 import TDropdownItem from '@/Components/Utils/DropdownItem.vue'
 import { Head, Link } from '@inertiajs/inertia-vue3'
 import BaseIcon from '@/Components/Utils/BaseIcon'
+import { UserIcon } from '@heroicons/vue/solid'
 
 export default defineComponent({
   components: {
+    UserIcon,
     Head,
     JetApplicationMark,
-    JetBanner,
     TNavLink,
     JetResponsiveNavLink,
     TDropdown,
@@ -107,6 +112,10 @@ export default defineComponent({
     }
   },
 
-  methods: {}
+  methods: {
+    logout() {
+      this.$inertia.post(route('logout'))
+    }
+  }
 })
 </script>

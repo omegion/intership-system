@@ -1,11 +1,9 @@
 <template>
-  <el-menu :default-active="$page.component">
+  <el-menu :default-active="$page.component" :collapse-transition="false">
+    {{}}
     <el-menu-item index="Dashboard">
-      <a
-        :href="route('dashboard')"
-        :class="getClasses('Dashboard', $page.component)"
-      >
-        <svg
+      <Link :href="route('dashboard')">
+        <HomeIcon
           class="
             text-gray-400
             group-hover:text-gray-500
@@ -14,26 +12,14 @@
             h-6
             w-6
           "
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          aria-hidden="true"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M4 6h16M4 10h16M4 14h16M4 18h16"
-          ></path>
-        </svg>
+        />
         Dashboard
-      </a>
+      </Link>
     </el-menu-item>
-    <el-sub-menu index="1">
+    <el-sub-menu index="1" v-if="hasPermission('can-list-students')">
       <template #title>
-        <span :class="getClasses(0, 1)">
-          <svg
+        <span class="sub-menu-item">
+          <UsersIcon
             class="
               text-gray-400
               group-hover:text-gray-500
@@ -42,37 +28,81 @@
               h-6
               w-6
             "
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-            />
-          </svg>
+          />
+          User
+        </span>
+      </template>
+      <el-menu-item index="User/List">
+        <Link :href="route('user.list')">List</Link>
+      </el-menu-item>
+    </el-sub-menu>
+    <el-sub-menu index="2">
+      <template #title>
+        <span class="sub-menu-item">
+          <OfficeBuildingIcon
+            class="
+              text-gray-400
+              group-hover:text-gray-500
+              mr-3
+              flex-shrink-0
+              h-6
+              w-6
+            "
+          />
           Company
         </span>
       </template>
-      <el-menu-item index="Company/List" class="" active>
-        <a
-          :href="route('company.list')"
-          :class="getClasses('Company/List', $page.component)"
-        >
-          List
-        </a>
+      <el-menu-item index="Company/List">
+        <Link :href="route('company.list')">List</Link>
       </el-menu-item>
       <el-menu-item index="Company/Add" class="">
-        <a
-          :href="route('company.add')"
-          :class="getClasses('Company/Add', $page.component)"
-        >
-          Add
-        </a>
+        <Link :href="route('company.add')">Add</Link>
+      </el-menu-item>
+    </el-sub-menu>
+    <el-sub-menu index="3">
+      <template #title>
+        <span class="sub-menu-item">
+          <LocationMarkerIcon
+            class="
+              text-gray-400
+              group-hover:text-gray-500
+              mr-3
+              flex-shrink-0
+              h-6
+              w-6
+            "
+          />
+          Location
+        </span>
+      </template>
+      <el-menu-item index="Location/Country/List">
+        <Link :href="route('location.country.list')">Countries</Link>
+      </el-menu-item>
+      <el-menu-item index="Location/City/List">
+        <Link :href="route('location.city.list')">Cities</Link>
+      </el-menu-item>
+    </el-sub-menu>
+    <el-sub-menu index="4">
+      <template #title>
+        <span class="sub-menu-item">
+          <LocationMarkerIcon
+            class="
+              text-gray-400
+              group-hover:text-gray-500
+              mr-3
+              flex-shrink-0
+              h-6
+              w-6
+            "
+          />
+          Settings
+        </span>
+      </template>
+      <el-menu-item index="Location/Country/List">
+        <Link :href="route('location.country.list')">System Settings</Link>
+      </el-menu-item>
+      <el-menu-item index="Location/Country/List">
+        <Link :href="route('location.country.list')">User Settings</Link>
       </el-menu-item>
     </el-sub-menu>
   </el-menu>
@@ -82,50 +112,21 @@
 import { defineComponent } from 'vue'
 import { Link } from '@inertiajs/inertia-vue3'
 
+import {
+  HomeIcon,
+  LocationMarkerIcon,
+  OfficeBuildingIcon,
+  UsersIcon
+} from '@heroicons/vue/outline'
+
 export default defineComponent({
   name: 't-menu',
   components: {
-    Link
-  },
-  methods: {
-    getClasses(val, component) {
-      if (val === component)
-        return 'bg-gray-200 text-gray-900 group flex items-center px-3 py-2 my-1 text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 transition'
-      else
-        return 'text-gray-700 hover:text-gray-900 hover:bg-gray-50 group flex items-center px-3 py-2 my-1 text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 transition'
-    }
+    Link,
+    UsersIcon,
+    HomeIcon,
+    OfficeBuildingIcon,
+    LocationMarkerIcon
   }
 })
 </script>
-
-<style lang="scss">
-.el-menu {
-  background-color: inherit;
-  border-right: 0;
-
-  .el-menu-item {
-    height: inherit;
-    padding: inherit;
-
-    &:hover {
-      background-color: inherit;
-    }
-  }
-
-  .el-sub-menu {
-    .el-menu-item {
-      padding: inherit;
-      height: inherit;
-    }
-  }
-
-  .el-sub-menu__title {
-    height: inherit;
-    padding: inherit;
-
-    &:hover {
-      background-color: inherit;
-    }
-  }
-}
-</style>

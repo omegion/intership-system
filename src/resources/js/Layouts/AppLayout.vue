@@ -325,7 +325,16 @@
             </div>
           </div>
         </div>
-        <main class="flex-1 relative z-0 overflow-y-auto focus:outline-none">
+        <main
+          class="
+            flex-1
+            relative
+            z-0
+            overflow-y-auto
+            focus:outline-none
+            bg-gray-100
+          "
+        >
           <div
             class="
               border-b border-gray-200
@@ -333,6 +342,7 @@
               py-4
               sm:flex sm:items-center sm:justify-between sm:px-6
               lg:px-8
+              bg-white
             "
           >
             <div class="flex-1 h-auto">
@@ -355,8 +365,11 @@
             </div>
           </div>
           <main>
-            <jet-banner />
-            <slot></slot>
+            <flash-banner />
+            <slot name="flash-banner" />
+            <div class="py-10 bg-gray-50 h-screen">
+              <slot></slot>
+            </div>
           </main>
         </main>
       </div>
@@ -367,7 +380,7 @@
 <script>
 import { defineComponent } from 'vue'
 import JetApplicationMark from '@/Components/Utils/ApplicationMark.vue'
-import JetBanner from '@/Components/Utils/Banner.vue'
+import FlashBanner from '@/Components/Utils/FlashBanner'
 import TDropdown from '@/Components/Utils/Dropdown.vue'
 import TDropdownItem from '@/Components/Utils/DropdownItem.vue'
 import JetDropdownLink from '@/Components/Utils/DropdownItem.vue'
@@ -390,7 +403,7 @@ export default defineComponent({
     Navbar,
     Head,
     JetApplicationMark,
-    JetBanner,
+    FlashBanner,
     TDropdown,
     TDropdownItem,
     JetDropdownLink,

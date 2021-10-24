@@ -1,5 +1,5 @@
-const mix = require('laravel-mix');
-
+const mix = require('laravel-mix')
+const tailwindcss = require('tailwindcss')
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -11,15 +11,17 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js').vue()
-    .postCss('resources/css/tailwind.css', 'public/css', [
-        require('postcss-import'),
-        require('tailwindcss'),
-    ])
-    .webpackConfig(require('./webpack.config'));
+mix
+  .js('resources/js/app.js', 'public/js')
+  .vue()
+  .sass('resources/sass/tailwind.scss', 'public/css')
+  .options({
+    postCss: [tailwindcss('./tailwind.config.js')]
+  })
+  .webpackConfig(require('./webpack.config'))
 
-mix.sass('resources/sass/app.scss', 'public/css');
+mix.sass('resources/sass/app.scss', 'public/css')
 
 if (mix.inProduction()) {
-    mix.version();
+  mix.version()
 }

@@ -1,7 +1,10 @@
 @forward "~element-plus/theme-chalk/src/common/var.scss" with (
   $colors: (
-
+    "primary": (
+      "base": #4F46E5,
+    ),
   ),
 );
 
 @import "~element-plus/theme-chalk/src/index.scss";
+@import "overrides";

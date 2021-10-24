@@ -5,10 +5,12 @@
       <t-button secondary>Test</t-button>
       <t-button secondary>Test</t-button>
     </template>
-    <div class="bg-gray-100">
-      <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-        <add-company-form :user="$page.props.user" />
-      </div>
+    <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+      <add-company-form
+        :user="$page.props.user"
+        :initial-countries="initialCountries"
+        :initial-cities="initialCities"
+      />
     </div>
   </app-layout>
 </template>
@@ -23,7 +25,7 @@ import TInput from '@/Components/Utils/Input'
 import JetInputError from '@/Components/Utils/InputError'
 import JetLabel from '@/Components/Utils/Label'
 import JetSecondaryButton from '@/Components/Utils/SecondaryButton'
-import AddCompanyForm from '@/Pages/Company/Partials/AddCompanyForm'
+import AddCompanyForm from '@/Pages/Company/Partials/Add/AddCompanyForm'
 
 export default defineComponent({
   components: {
@@ -38,7 +40,7 @@ export default defineComponent({
     JetSecondaryButton
   },
 
-  props: ['user'],
+  props: ['user', 'initialCountries', 'initialCities'],
 
   data() {
     return {

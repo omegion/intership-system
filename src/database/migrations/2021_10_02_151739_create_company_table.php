@@ -18,6 +18,8 @@ class CreateCompanyTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->foreignId('creator_user_id')->nullable()->references('id')->on('users');
+            $table->foreignId('country_id')->nullable()->references('id')->on('countries');
+            $table->foreignId('city_id')->nullable()->references('id')->on('cities');
             $table->timestamp('verified_at')->nullable();
             $table->timestamps();
         });
@@ -30,6 +32,6 @@ class CreateCompanyTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('company');
+        Schema::dropIfExists('companies');
     }
 }

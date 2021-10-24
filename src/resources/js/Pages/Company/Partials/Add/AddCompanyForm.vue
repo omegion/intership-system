@@ -23,7 +23,7 @@
       </div>
 
       <!-- Email -->
-      <div class="col-span-6 sm:col-span-4">
+      <div class="col-span-6 sm:col-span-4 pb-3">
         <jet-label for="email" value="Email" />
         <t-input
           id="email"
@@ -34,6 +34,38 @@
           placeholder="example@company.com"
         />
         <jet-input-error :message="form.errors.email" class="mt-2" />
+      </div>
+    </template>
+  </t-form-section>
+  <t-form-section @submitted="storeCompany" class="mt-8">
+    <template #title>Location Information</template>
+
+    <template #description>
+      Define information about the company. It is important that you provide
+      valid information.
+    </template>
+
+    <template #form>
+      <!-- Country -->
+      <div class="col-span-6 sm:col-span-4">
+        <jet-label for="country" value="Country" />
+        <CountrySelectBox
+          id="country"
+          v-model="form.country_id"
+          :initial-options="initialCountries"
+        />
+        <jet-input-error :message="form.errors.country_id" class="mt-2" />
+      </div>
+
+      <!-- City -->
+      <div class="col-span-6 sm:col-span-4">
+        <jet-label for="city" value="City" />
+        <CitySelectBox
+          id="city"
+          v-model="form.city_id"
+          :initial-options="initialCities"
+        />
+        <jet-input-error :message="form.errors.city_id" class="mt-2" />
       </div>
     </template>
 
@@ -61,9 +93,13 @@ import JetInputError from '@/Components/Utils/InputError.vue'
 import JetLabel from '@/Components/Utils/Label.vue'
 import JetActionMessage from '@/Components/Utils/ActionMessage.vue'
 import JetSecondaryButton from '@/Components/Utils/SecondaryButton.vue'
+import CountrySelectBox from '@/Components/Utils/CountrySelectBox'
+import CitySelectBox from '@/Components/Utils/CitySelectBox'
 
 export default defineComponent({
   components: {
+    CitySelectBox,
+    CountrySelectBox,
     JetActionMessage,
     TButton,
     TFormSection,
@@ -73,14 +109,16 @@ export default defineComponent({
     JetSecondaryButton
   },
 
-  props: ['user'],
+  props: ['user', 'initialCountries', 'initialCities'],
 
   data() {
     return {
       form: this.$inertia.form({
         _method: 'POST',
         name: '',
-        email: ''
+        email: '',
+        country_id: '',
+        city_id: ''
       }),
 
       photoPreview: null
@@ -91,43 +129,8 @@ export default defineComponent({
     storeCompany() {
       this.form.post(route('company.store'), {
         errorBag: 'storeCompany',
-        preserveScroll: true,
-        onSuccess: () => this.clearPhotoFileInput()
+        preserveScroll: true
       })
-    },
-
-    selectNewPhoto() {
-      this.$refs.photo.click()
-    },
-
-    updatePhotoPreview() {
-      const photo = this.$refs.photo.files[0]
-
-      if (!photo) return
-
-      const reader = new FileReader()
-
-      reader.onload = (e) => {
-        this.photoPreview = e.target.result
-      }
-
-      reader.readAsDataURL(photo)
-    },
-
-    deletePhoto() {
-      this.$inertia.delete(route('current-user-photo.destroy'), {
-        preserveScroll: true,
-        onSuccess: () => {
-          this.photoPreview = null
-          this.clearPhotoFileInput()
-        }
-      })
-    },
-
-    clearPhotoFileInput() {
-      if (this.$refs.photo?.value) {
-        this.$refs.photo.value = null
-      }
     }
   }
 })

@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\CityController;
+use App\Http\Controllers\CompanyActivityController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\CountryController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -33,5 +37,41 @@ Route::middleware(['auth:sanctum', 'verified'])->prefix('company')->name('compan
     Route::get('/list', [CompanyController::class, 'index'])->name('list');
     Route::get('/add', [CompanyController::class, 'add'])->name('add');
     Route::post('/add', [CompanyController::class, 'store'])->name('store');
-    Route::get('/{company:slug}', [CompanyController::class, 'show'])->name('show');
+    Route::get('/{company:id}/edit', [CompanyController::class, 'edit'])->name('edit');
+    Route::put('/{company:id}/edit', [CompanyController::class, 'update'])->name('update');
+    Route::get('/{company:id}', [CompanyController::class, 'show'])->name('show');
+    Route::get('/{company:id}/activities', [CompanyActivityController::class, 'index'])->name('activity.list');
+
+    Route::middleware(['role:admin,lecturer'])->group(function () {
+        Route::put('/{company:id}/editVerification', [CompanyController::class, 'updateVerification'])->name('updateVerification');
+    });
+});
+
+Route::middleware(['auth:sanctum', 'verified', 'role:admin,lecturer'])->prefix('user')->name('user.')->group(function () {
+    Route::get('/list', [UserController::class, 'index'])->name('list');
+    Route::get('/{user:id}', [UserController::class, 'show'])->name('show');
+    Route::get('/{user:id}/edit', [UserController::class, 'edit'])->name('edit');
+    Route::put('/{user:id}/edit', [UserController::class, 'update'])->name('update');
+    Route::put('/{user:id}/editVerification', [UserController::class, 'updateVerification'])->name('updateVerification');
+});
+
+Route::middleware(['auth:sanctum', 'verified', 'role:admin,lecturer,student'])->prefix('location')->name('location.')->group(function () {
+    Route::prefix('country')->name('country.')->group(function () {
+        Route::get('/list', [CountryController::class, 'index'])->name('list');
+        Route::get('/create', [CountryController::class, 'create'])->name('create');
+        Route::post('/create', [CountryController::class, 'store'])->name('store');
+        Route::get('/{country:id}/edit', [CountryController::class, 'edit'])->name('edit');
+        Route::put('/{country:id}/edit', [CountryController::class, 'update'])->name('update');
+        Route::delete('/{country:id}/edit', [CountryController::class, 'destroy'])->name('destroy');
+        Route::get('/search', [CountryController::class, 'search'])->name('search');
+    });
+    Route::prefix('city')->name('city.')->group(function () {
+        Route::get('/list', [CityController::class, 'index'])->name('list');
+        Route::get('/create', [CityController::class, 'create'])->name('create');
+        Route::post('/create', [CityController::class, 'store'])->name('store');
+        Route::get('/{city:id}/edit', [CityController::class, 'edit'])->name('edit');
+        Route::put('/{city:id}/edit', [CityController::class, 'update'])->name('update');
+        Route::delete('/{city:id}/edit', [CityController::class, 'destroy'])->name('destroy');
+        Route::get('/search', [CityController::class, 'search'])->name('search');
+    });
 });

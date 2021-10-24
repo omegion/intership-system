@@ -8,6 +8,10 @@ import ElementPlus from 'element-plus'
 const appName =
   window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel'
 
+const hasPermission = function (permission) {
+  return this.$page.props.user.permissions.includes(permission)
+}
+
 createInertiaApp({
   title: (title) => `${title} - ${appName}`,
   resolve: (name) => require(`./Pages/${name}.vue`),
@@ -15,7 +19,12 @@ createInertiaApp({
     return createApp({ render: () => h(app, props) })
       .use(plugin)
       .use(ElementPlus)
-      .mixin({ methods: { route } })
+      .mixin({
+        methods: {
+          route,
+          hasPermission
+        }
+      })
       .mount(el)
   }
 })

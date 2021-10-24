@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -165,6 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -233,4 +234,7 @@ return [
 
     ],
 
+    'page_size' => env('PAGE_SIZE', 10),
+    'company_address_suggestions' => env('GOOGLE_MAPS_API', false),
+    'google_maps_api' => env('GOOGLE_MAPS_API', ''),
 ];

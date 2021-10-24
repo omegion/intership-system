@@ -439,7 +439,6 @@
 <script>
 import { defineComponent } from 'vue'
 import JetApplicationMark from '@/Components/Utils/ApplicationMark.vue'
-import JetBanner from '@/Components/Utils/Banner.vue'
 import TNavLink from '@/Components/Utils/NavLink.vue'
 import JetResponsiveNavLink from '@/Components/Utils/ResponsiveNavLink.vue'
 import TDropdown from '@/Components/Utils/Dropdown.vue'
@@ -456,7 +455,6 @@ export default defineComponent({
     Menu,
     Head,
     JetApplicationMark,
-    JetBanner,
     TNavLink,
     JetResponsiveNavLink,
     TDropdown,

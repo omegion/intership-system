@@ -2,11 +2,11 @@
   <div>
     <div
       :class="{
-        'bg-green-500': style == 'success',
-        'bg-yellow-500': style == 'warning',
-        'bg-red-700': style == 'danger'
+        'bg-green-500': type == 'success',
+        'bg-yellow-500': type == 'warning',
+        'bg-red-700': type == 'danger'
       }"
-      v-if="show && message"
+      v-if="show"
     >
       <div class="max-w-screen-xl mx-auto py-2 px-3 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between flex-wrap">
@@ -14,9 +14,9 @@
             <span
               class="flex p-2 rounded-lg"
               :class="{
-                'bg-green-600': style == 'success',
-                'bg-yellow-600': style == 'warning',
-                'bg-red-600': style == 'danger'
+                'bg-green-600': type == 'success',
+                'bg-yellow-600': type == 'warning',
+                'bg-red-600': type == 'danger'
               }"
             >
               <svg
@@ -25,7 +25,7 @@
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-                v-if="style == 'success'"
+                v-if="type == 'success'"
               >
                 <path
                   stroke-linecap="round"
@@ -41,7 +41,7 @@
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-                v-if="style == 'warning'"
+                v-if="type == 'warning'"
               >
                 <path
                   stroke-linecap="round"
@@ -57,7 +57,7 @@
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-                v-if="style == 'danger'"
+                v-if="type == 'danger'"
               >
                 <path
                   stroke-linecap="round"
@@ -67,9 +67,10 @@
                 />
               </svg>
             </span>
-            <p class="ml-3 font-medium text-sm text-white truncate">
-              {{ message }}
-            </p>
+            <p
+              class="ml-3 font-medium text-sm text-white truncate"
+              v-html="message"
+            ></p>
           </div>
 
           <div class="flex-shrink-0 sm:ml-3">
@@ -85,9 +86,9 @@
                 transition
               "
               :class="{
-                'hover:bg-success-600 focus:bg-success-600': style == 'success',
-                'hover:bg-yellow-600 focus:bg-yellow-600': style == 'warning',
-                'hover:bg-red-600 focus:bg-red-600': style == 'danger'
+                'hover:bg-success-600 focus:bg-success-600': type == 'success',
+                'hover:bg-yellow-600 focus:bg-yellow-600': type == 'warning',
+                'hover:bg-red-600 focus:bg-red-600': type == 'danger'
               }"
               aria-label="Dismiss"
               @click.prevent="show = false"
@@ -118,19 +119,22 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
+  props: {
+    message: {
+      default: null
+    },
+    type: {
+      default: 'success'
+    }
+  },
   data() {
     return {
       show: true
     }
   },
-
-  computed: {
-    style() {
-      return this.$page.props.jetstream.flash?.bannerStyle || 'success'
-    },
-
-    message() {
-      return this.$page.props.jetstream.flash?.banner || ''
+  methods: {
+    toggle() {
+      this.show = !this.show
     }
   }
 })

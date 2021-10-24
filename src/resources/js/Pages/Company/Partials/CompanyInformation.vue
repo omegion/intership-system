@@ -120,10 +120,9 @@
 
 <script>
 import { defineComponent } from 'vue'
-import CompanyHeaderActions from '@/Pages/Company/Partials/CompanyHeaderActions'
 
 export default defineComponent({
-  components: { CompanyHeaderActions },
+  components: {},
   props: ['company']
 })
 </script>

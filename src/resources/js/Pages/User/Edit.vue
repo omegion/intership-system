@@ -29,6 +29,8 @@
     <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
       <UpdateDetailsForm :user="currentUser" />
       <section-border />
+      <UserUpdateRoleDetailsForm :user="currentUser" :roles="roles" />
+      <section-border />
       <UpdateVerificationForm :user="currentUser" />
     </div>
   </app-layout>
@@ -43,11 +45,13 @@ import UpdateVerificationForm from '@/Pages/User/Partials/Edit/UpdateVerificatio
 import SectionBorder from '@/Components/Utils/SectionBorder'
 import HeaderActions from '@/Pages/User/Partials/HeaderActions'
 import { Link } from '@inertiajs/inertia-vue3'
+import UserUpdateRoleDetailsForm from '@/Pages/User/Partials/Edit/UpdateRoleDetails'
 
 export default defineComponent({
-  props: ['currentUser'],
+  props: ['currentUser', 'roles'],
 
   components: {
+    UserUpdateRoleDetailsForm,
     HeaderActions,
     SectionBorder,
     UpdateVerificationForm,

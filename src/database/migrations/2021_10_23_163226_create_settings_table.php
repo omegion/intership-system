@@ -20,7 +20,7 @@ class CreateSettingsTable extends Migration
             $table->string('description');
             $table->string('value');
             $table->string('value_type');
-            $table->foreign('group_id')->references('id')->on('setting_groups')->onDelete('cascade');
+            $table->foreignId('group_id')->references('id')->on('setting_groups')->onDelete('cascade');
             $table->timestamps();
         });
     }

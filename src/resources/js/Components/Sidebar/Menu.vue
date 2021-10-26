@@ -1,6 +1,5 @@
 <template>
-  <el-menu :default-active="$page.component" :collapse-transition="false">
-    {{}}
+  <el-menu :default-active="$page.component" :unique-opened="true">
     <el-menu-item index="Dashboard">
       <Link :href="route('dashboard')">
         <HomeIcon
@@ -82,10 +81,10 @@
         <Link :href="route('location.city.list')">Cities</Link>
       </el-menu-item>
     </el-sub-menu>
-    <el-sub-menu index="4">
+    <el-sub-menu index="4" v-if="hasPermission('can-list-setting')">
       <template #title>
         <span class="sub-menu-item">
-          <LocationMarkerIcon
+          <AdjustmentsIcon
             class="
               text-gray-400
               group-hover:text-gray-500
@@ -98,11 +97,8 @@
           Settings
         </span>
       </template>
-      <el-menu-item index="Location/Country/List">
-        <Link :href="route('location.country.list')">System Settings</Link>
-      </el-menu-item>
-      <el-menu-item index="Location/Country/List">
-        <Link :href="route('location.country.list')">User Settings</Link>
+      <el-menu-item index="Setting/List">
+        <Link :href="route('setting.list')">System</Link>
       </el-menu-item>
     </el-sub-menu>
   </el-menu>
@@ -113,6 +109,7 @@ import { defineComponent } from 'vue'
 import { Link } from '@inertiajs/inertia-vue3'
 
 import {
+  AdjustmentsIcon,
   HomeIcon,
   LocationMarkerIcon,
   OfficeBuildingIcon,
@@ -126,7 +123,8 @@ export default defineComponent({
     UsersIcon,
     HomeIcon,
     OfficeBuildingIcon,
-    LocationMarkerIcon
+    LocationMarkerIcon,
+    AdjustmentsIcon
   }
 })
 </script>

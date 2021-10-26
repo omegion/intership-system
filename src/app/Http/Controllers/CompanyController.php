@@ -9,6 +9,7 @@ use App\Events\CompanyVerified;
 use App\Models\City;
 use App\Models\Company;
 use App\Models\Country;
+use App\Models\Setting;
 use App\Traits\InteractsWithBanner;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -75,7 +76,7 @@ class CompanyController extends Controller
         ]);
 
         if ($company->isDirty()) {
-            if ($request->user()->hasRole('student') && $company->verified_at != null) {
+            if ($request->user()->hasRole('student') && $company->verified_at != null && Setting::get('company.require-verification-after-update', true)) {
                 $company->forceFill(['verified_at' => null]);
                 CompanyUnverified::dispatch($company, $request->user());
             }
@@ -150,5 +151,17 @@ class CompanyController extends Controller
         $this->banner("The company is created.");
 
         return redirect()->route('company.list');
+    }
+
+
+    public function destroy(Request $request, Company $company)
+    {
+        $company->delete();
+
+        $this->banner(sprintf("The company <strong>%s</strong> is deleted.", $company->name));
+
+        return $request->wantsJson()
+            ? new JsonResponse('', 200)
+            : redirect()->route('company.list');
     }
 }

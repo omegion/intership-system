@@ -33,7 +33,6 @@ class Role extends Model
     use HasFactory;
 
     protected array $hidden = [
-        'id',
         'created_at',
         'updated_at',
         'pivot',

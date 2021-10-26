@@ -30,6 +30,11 @@ const LOCATION = [
     "Can Delete City",
 ];
 
+const SETTING = [
+    "Can List Setting",
+    "Can Edit Setting",
+];
+
 class RolePermissionSeeder extends Seeder
 {
     /**
@@ -40,34 +45,53 @@ class RolePermissionSeeder extends Seeder
     public function run()
     {
         $rolesPermissions = [
-            "Admin" => [
-                ...STUDENT,
-                ...COMPANY,
-                ...LOCATION
-            ],
-            "Lecturer" => [
-                ...STUDENT,
-                ...COMPANY
-            ],
-            "Student" => [
-
+            [
+                "name" => "Admin",
+                "description" => "Admin role includes all permission which can execute every possible operation in the system.",
+                "permissions" => [
+                    ...STUDENT,
+                    ...COMPANY,
+                    ...LOCATION,
+                    ...SETTING
+                ]
+            ], [
+                "name" => "Lecturer",
+                "description" => "Lecturer role is operator role which can execute major operations.",
+                "permissions" => [
+                    ...STUDENT,
+                    ...COMPANY
+                ]
+            ], [
+                "name" => "Student",
+                "description" => "Student role is a basic consumer role which can execute minor operations.",
+                "permissions" => [
+                ]
             ],
         ];
 
-        foreach ($rolesPermissions as $role => $permissions) {
-            $role = Role::updateOrCreate([
-                'name' => $role,
-                'slug' => Str::slug($role),
-            ]);
+        foreach ($rolesPermissions as $role) {
+            if (!Role::where('slug', Str::slug($role['name']))->exists()) {
+                $createdRole = Role::create([
+                    'name' => $role['name'],
+                    'slug' => Str::slug($role['name']),
+                    'description' => $role['description'],
+                ]);
+            } else {
+                $createdRole = Role::whereSlug(Str::slug($role['name']))->firstOrFail();
+                $createdRole->fill([
+                    'description' => $role['description'],
+                ])->save();
+            }
 
-            foreach ($permissions as $permission) {
+
+            foreach ($role['permissions'] as $permission) {
                 $permission = Permission::updateOrCreate([
                     'name' => $permission,
                     'slug' => Str::slug($permission),
                 ]);
 
-                if (!$role->permissions()->where('id', $permission->id)->exists()) {
-                    $role->permissions()->save($permission);
+                if (!$createdRole->permissions()->where('id', $permission->id)->exists()) {
+                    $createdRole->permissions()->save($permission);
                 }
             }
         }

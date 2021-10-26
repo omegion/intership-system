@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\City;
+use App\Models\Setting;
 use App\Traits\InteractsWithBanner;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ class CityController extends Controller
         }
 
         $paginator = $builder->orderBy('id', 'desc')
-            ->paginate(config('app.page_size'));
+            ->paginate(Setting::get('system.pagination-page-size', 10));
 
         return Inertia::render('Location/City/List', [
             'cities' => $paginator
@@ -92,7 +93,7 @@ class CityController extends Controller
     {
         $city->delete();
 
-        $this->banner(sprintf("The country <strong>%s</strong> is deleted.", $city->name));
+        $this->banner(sprintf("The city <strong>%s</strong> is deleted.", $city->name));
 
         return $request->wantsJson()
             ? new JsonResponse('', 200)

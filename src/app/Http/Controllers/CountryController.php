@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Country;
+use App\Models\Setting;
 use App\Traits\InteractsWithBanner;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ class CountryController extends Controller
         }
 
         $paginator = $builder->orderBy('id', 'desc')
-            ->paginate(config('app.page_size'));
+            ->paginate(Setting::get('system.pagination-page-size', 10));
 
         return Inertia::render('Location/Country/List', [
             'countries' => $paginator

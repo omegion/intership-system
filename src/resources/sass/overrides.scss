@@ -97,6 +97,7 @@
 // INPUT
 .el-input {
     .el-input__inner {
-        @apply border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow  block w-full
+        @apply border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 rounded-md shadow block w-full
     }
 }
+

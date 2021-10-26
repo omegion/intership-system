@@ -110,27 +110,18 @@ export default defineComponent({
         name: this.company.name,
         email: this.company.email,
         country_id: this.company.country_id,
-        city_id: this.company.city_id,
-        photo: null
-      }),
-
-      photoPreview: null
+        city_id: this.company.city_id
+      })
     }
   },
 
   methods: {
     updateCompanyInformation() {
-      if (this.$refs.photo) {
-        this.form.photo = this.$refs.photo.files[0]
-      }
-
       this.form.post(route('company.update', { company: this.company.id }), {
         errorBag: 'updateCompanyInformation',
-        preserveScroll: true,
-        onSuccess: () => this.success()
+        preserveScroll: true
       })
-    },
-    success() {}
+    }
   }
 })
 </script>

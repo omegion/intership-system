@@ -37,6 +37,8 @@
         v-if="hasPermission('can-verify-company')"
         :company="company"
       />
+      <section-border />
+      <CompanyDeletionForm :company="company" />
     </div>
   </app-layout>
 </template>
@@ -49,11 +51,13 @@ import UpdateDetailsForm from '@/Pages/Company/Partials/Edit/UpdateDetailsForm'
 import UpdateVerificationForm from '@/Pages/Company/Partials/Edit/UpdateVerificationForm'
 import SectionBorder from '@/Components/Utils/SectionBorder'
 import { Link } from '@inertiajs/inertia-vue3'
+import CompanyDeletionForm from '@/Pages/Company/Partials/Edit/DeletionForm'
 
 export default defineComponent({
   props: ['company', 'initialCountries', 'initialCities'],
 
   components: {
+    CompanyDeletionForm,
     SectionBorder,
     UpdateVerificationForm,
     UpdateDetailsForm,

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -34,10 +35,11 @@ class UserController extends Controller
     public function edit(Request $request, string $userId): Response
     {
         $user = User::findOrFail($userId);
-
+        $roles = Role::all();
 
         return Inertia::render('User/Edit', [
-            'currentUser' => $user
+            'currentUser' => $user,
+            'roles' => $roles
         ]);
     }
 
@@ -73,6 +75,26 @@ class UserController extends Controller
         $user->forceFill([
             'verified_at' => $request->input('verified_at'),
         ])->save();
+
+        return $request->wantsJson()
+            ? new JsonResponse('', 200)
+            : back();
+    }
+
+    public function addRoleToUser(Request $request, User $user)
+    {
+        $role = Role::whereId($request->input('role_id'))->firstOrFail();
+        $user->roles()->attach($role->id);
+
+        return $request->wantsJson()
+            ? new JsonResponse('', 200)
+            : back();
+    }
+
+    public function removeRoleFromUser(Request $request, User $user)
+    {
+        $role = Role::whereId($request->input('role_id'))->firstOrFail();;
+        $user->roles()->detach($role);
 
         return $request->wantsJson()
             ? new JsonResponse('', 200)

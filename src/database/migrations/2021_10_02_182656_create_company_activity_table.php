@@ -18,8 +18,8 @@ class CreateCompanyActivityTable extends Migration
             $table->string('name')->nullable();
             $table->text('description')->nullable();
             $table->string('type')->nullable();
-            $table->foreignId('company_id')->nullable()->references('id')->on('companies');
-            $table->foreignId('user_id')->nullable()->references('id')->on('users');
+            $table->foreignId('company_id')->nullable()->references('id')->on('companies')->cascadeOnDelete();
+            $table->foreignId('user_id')->nullable()->references('id')->on('users')->cascadeOnUpdate()->nullOnDelete();
             $table->timestamps();
         });
     }

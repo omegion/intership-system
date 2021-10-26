@@ -25,7 +25,7 @@ class City extends Model
         }
 
         $q->where('name', 'LIKE', "%{$query}%")
-            ->take(config('app.page_size'));
+            ->take(Setting::get('system.pagination-page-size', 10));
 
         return $q->get();
     }

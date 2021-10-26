@@ -65,10 +65,18 @@ export default defineComponent({
           showClose: false
         }
       )
-        .then(() => {
-          this.delete()
-        })
-        .catch(() => {})
+        .then(() => this.deleteConfirm())
+        .catch()
+    },
+    deleteConfirm() {
+      this.$confirm('Do you want to delete?', 'Warning', {
+        confirmButtonText: 'Yes',
+        confirmButtonClass: 'el-button--danger',
+        type: 'error',
+        showClose: false
+      })
+        .then(() => this.delete())
+        .catch()
     },
     delete() {
       this.form.delete(route('location.city.destroy', { city: this.city.id }), {

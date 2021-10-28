@@ -1,5 +1,5 @@
 <template>
-  <label class="block font-medium text-sm text-gray-700">
+  <label class="block font-medium text-sm text-gray-700 mb-1">
     <span v-if="value" class="flex">
       {{ value }}
       <el-popover

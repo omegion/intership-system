@@ -8,13 +8,13 @@ use App\Events\CompanyUpdated;
 use App\Events\CompanyVerified;
 use App\Models\City;
 use App\Models\Company;
+use App\Models\CompanyCategory;
 use App\Models\Country;
 use App\Models\Setting;
 use App\Traits\InteractsWithBanner;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -37,7 +37,7 @@ class CompanyController extends Controller
 
     public function show(Request $request, string $companyId): Response
     {
-        $company = Company::findOrFail($companyId);
+        $company = Company::with('country', 'city', 'categories')->findOrFail($companyId);
 
         return Inertia::render('Company/Show', [
             'company' => $company
@@ -46,31 +46,35 @@ class CompanyController extends Controller
 
     public function edit(Request $request, string $companyId): Response
     {
-        $company = Company::findOrFail($companyId);
+        $company = Company::with('categories')->findOrFail($companyId);
         $initialCountries = Country::search('', $company->country_id);
         $initialCities = City::search('', $company->city_id);
+        $initialCategories = CompanyCategory::search('', $company->category_ids->toArray());
 
         return Inertia::render('Company/Edit', [
             'company' => $company,
             'initialCountries' => $initialCountries,
             'initialCities' => $initialCities,
+            'initialCategories' => $initialCategories,
         ]);
     }
 
-    public function update(Request $request, string $companyId)
+    public function update(Request $request, Company $company)
     {
-        $company = Company::findOrFail($companyId);
-
-        Validator::make($request->all(), [
+        $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($company->id)],
+            'phone' => ['required', 'string', 'max:255'],
+            'address' => ['required', 'string', 'max:255'],
             'country_id' => ['required', 'integer'],
             'city_id' => ['required', 'integer'],
-        ])->validateWithBag('updateCompanyInformation');
+        ]);
 
         $company->forceFill([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
+            'phone' => $request->input('phone'),
+            'address' => $request->input('address'),
             'country_id' => $request->input('country_id'),
             'city_id' => $request->input('city_id'),
         ]);
@@ -85,19 +89,19 @@ class CompanyController extends Controller
             CompanyUpdated::dispatch($company, $request->user());
         }
 
+        $company->categories()->sync($request->input('categories'));
+
         return $request->wantsJson()
             ? new JsonResponse('', 200)
             : back();
     }
 
 
-    public function updateVerification(Request $request, string $companyId)
+    public function updateVerification(Request $request, Company $company)
     {
-        $company = Company::findOrFail($companyId);
-
-        Validator::make($request->all(), [
+        $request->validate([
             'verified_at' => ['nullable', 'date'],
-        ])->validateWithBag('updateCompanyVerificationInformation');
+        ]);
 
         $company->forceFill([
             'verified_at' => $request->input('verified_at'),
@@ -122,10 +126,12 @@ class CompanyController extends Controller
     {
         $initialCountries = Country::search();
         $initialCities = City::search();
+        $initialCategories = CompanyCategory::search();
 
         return Inertia::render('Company/Add', [
             'initialCountries' => $initialCountries,
             'initialCities' => $initialCities,
+            'initialCategories' => $initialCategories,
         ]);
     }
 
@@ -133,18 +139,26 @@ class CompanyController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:companies'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')],
+            'phone' => ['required', 'string', 'max:255'],
+            'address' => ['required', 'string', 'max:255'],
             'country_id' => ['required', 'integer'],
             'city_id' => ['required', 'integer'],
         ]);
 
         $company = Company::create([
-            'name' => $request->name,
-            'email' => $request->email,
+            'name' => $request->get('name'),
+            'email' => $request->get('email'),
+            'phone' => $request->get('phone'),
+            'address' => $request->get('address'),
             'creator_user_id' => $request->user()->id,
-            'country_id' => $request->country_id,
-            'city_id' => $request->city_id,
+            'country_id' => $request->get('country_id'),
+            'city_id' => $request->get('city_id'),
         ]);
+
+        if ($request->get('categories')) {
+            $company->categories()->sync($request->get('categories'));
+        }
 
         CompanyCreated::dispatch($company, $request->user());
 

@@ -6,6 +6,7 @@ use App\Traits\CompanyActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * App\Models\Company
@@ -39,6 +40,8 @@ class Company extends Model
     protected array $fillable = [
         'name',
         'email',
+        'phone',
+        'address',
         'creator_user_id',
         'country_id',
         'city_id',
@@ -48,6 +51,7 @@ class Company extends Model
         'is_verified',
         'profile_photo_url',
         'activities',
+        'category_ids',
     ];
 
     public function country(): BelongsTo
@@ -58,6 +62,11 @@ class Company extends Model
     public function city(): BelongsTo
     {
         return $this->belongsTo(City::class, 'city_id');
+    }
+
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(CompanyCategory::class, 'companies_categories');
     }
 
     public function getIsVerifiedAttribute()
@@ -73,5 +82,10 @@ class Company extends Model
     public function getActivitiesAttribute()
     {
         return $this->activities()->orderBy('id', 'desc')->take(10)->get();
+    }
+
+    public function getCategoryIdsAttribute()
+    {
+        return $this->categories()->allRelatedIds();
     }
 }

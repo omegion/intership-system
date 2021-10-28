@@ -25,7 +25,7 @@ class CountrySeeder extends Seeder
     {
         $response = Http::get(API_URL);
         foreach ($response->json() as $item) {
-            $res = Country::updateOrCreate([
+            Country::updateOrCreate([
                 'name' => $item['name']['common'],
                 'slug' => Str::slug($item['name']['common']),
                 'code' => $item['cca2'],

@@ -19,6 +19,8 @@
         <el-button
           type="danger"
           class="text-xs tracking-widest uppercase"
+          :class="({ 'opacity-45': form.processing }, 'submit')"
+          :loading="form.processing"
           @click="open"
         >
           Delete City
@@ -81,9 +83,7 @@ export default defineComponent({
     delete() {
       this.form.delete(route('location.city.destroy', { city: this.city.id }), {
         preserveScroll: true,
-        errorBag: 'destroyCity',
-        onError: () => this.$refs.password.focus(),
-        onFinish: () => this.form.reset()
+        errorBag: 'destroyCity'
       })
     }
   }

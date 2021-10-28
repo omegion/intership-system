@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CompanyActivityController;
+use App\Http\Controllers\CompanyCategoryController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\InternshipController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -34,19 +36,36 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
-Route::middleware(['auth:sanctum', 'verified'])->prefix('company')->name('company.')->group(function () {
-    Route::get('/list', [CompanyController::class, 'index'])->name('list');
-    Route::get('/add', [CompanyController::class, 'add'])->name('add');
-    Route::post('/add', [CompanyController::class, 'store'])->name('store');
-    Route::get('/{company:id}/edit', [CompanyController::class, 'edit'])->name('edit');
-    Route::put('/{company:id}/edit', [CompanyController::class, 'update'])->name('update');
-    Route::delete('/{company:id}/edit', [CompanyController::class, 'destroy'])->name('destroy');
-    Route::get('/{company:id}', [CompanyController::class, 'show'])->name('show');
-    Route::get('/{company:id}/activities', [CompanyActivityController::class, 'index'])->name('activity.list');
+Route::middleware(['auth:sanctum', 'verified', 'role:admin,lecturer,student'])->prefix('company')->name('company.')
+    ->group(function () {
+        Route::get('/list', [CompanyController::class, 'index'])->name('list');
+        Route::get('/add', [CompanyController::class, 'add'])->name('add');
+        Route::post('/add', [CompanyController::class, 'store'])->name('store');
+        Route::get('/{company:id}/edit', [CompanyController::class, 'edit'])->name('edit');
+        Route::put('/{company:id}/edit', [CompanyController::class, 'update'])->name('update');
+        Route::delete('/{company:id}/edit', [CompanyController::class, 'destroy'])->name('destroy');
+        Route::get('/{company:id}', [CompanyController::class, 'show'])->name('show');
+        Route::get('/{company:id}/activities', [CompanyActivityController::class, 'index'])->name('activity.list');
 
-    Route::middleware(['role:admin,lecturer'])->group(function () {
-        Route::put('/{company:id}/editVerification', [CompanyController::class, 'updateVerification'])->name('updateVerification');
+        Route::middleware(['role:admin,lecturer'])->group(function () {
+            Route::put('/{company:id}/editVerification', [CompanyController::class, 'updateVerification'])->name('updateVerification');
+        });
+
+        // COMPANY CATEGORY
+        Route::prefix('category')->name('category.')->group(function () {
+            Route::get('/list', [CompanyCategoryController::class, 'index'])->name('list');
+            Route::get('/search', [CompanyCategoryController::class, 'search'])->name('search');
+            Route::get('/create', [CompanyCategoryController::class, 'create'])->name('create');
+            Route::post('/create', [CompanyCategoryController::class, 'store'])->name('store');
+            Route::get('/{category:id}/edit', [CompanyCategoryController::class, 'edit'])->name('edit');
+            Route::put('/{category:id}/edit', [CompanyCategoryController::class, 'update'])->name('update');
+            Route::delete('/{category:id}/edit', [CompanyCategoryController::class, 'destroy'])->name('destroy');
+        });
     });
+
+Route::middleware(['auth:sanctum', 'verified', 'role:admin,lecturer,student'])->prefix('internship')->name('internship.')->group
+(function () {
+    Route::get('/create', [InternshipController::class, 'create'])->name('create');
 });
 
 Route::middleware(['auth:sanctum', 'verified', 'role:admin,lecturer'])->prefix('user')->name('user.')->group(function () {

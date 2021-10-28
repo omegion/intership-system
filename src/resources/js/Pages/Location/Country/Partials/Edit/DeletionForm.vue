@@ -19,6 +19,8 @@
         <el-button
           type="danger"
           class="text-xs tracking-widest uppercase"
+          :class="({ 'opacity-45': form.processing }, 'submit')"
+          :loading="form.processing"
           @click="open"
         >
           Delete Country

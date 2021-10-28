@@ -1,15 +1,12 @@
 <template>
   <app-layout title="Add Company">
     <template #header-title>Add Company</template>
-    <template #header-actions>
-      <t-button secondary>Test</t-button>
-      <t-button secondary>Test</t-button>
-    </template>
     <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
       <add-company-form
         :user="$page.props.user"
         :initial-countries="initialCountries"
         :initial-cities="initialCities"
+        :initial-categories="initialCategories"
       />
     </div>
   </app-layout>
@@ -30,77 +27,9 @@ import AddCompanyForm from '@/Pages/Company/Partials/Add/AddCompanyForm'
 export default defineComponent({
   components: {
     AddCompanyForm,
-    AppLayout,
-    JetActionMessage,
-    TButton,
-    TFormSection,
-    TInput,
-    JetInputError,
-    JetLabel,
-    JetSecondaryButton
+    AppLayout
   },
 
-  props: ['user', 'initialCountries', 'initialCities'],
-
-  data() {
-    return {
-      form: this.$inertia.form({
-        _method: 'PUT',
-        name: this.user.name,
-        email: this.user.email,
-        photo: null
-      }),
-
-      photoPreview: null
-    }
-  },
-
-  methods: {
-    updateProfileInformation() {
-      if (this.$refs.photo) {
-        this.form.photo = this.$refs.photo.files[0]
-      }
-
-      this.form.post(route('user-profile-information.update'), {
-        errorBag: 'updateProfileInformation',
-        preserveScroll: true,
-        onSuccess: () => this.clearPhotoFileInput()
-      })
-    },
-
-    selectNewPhoto() {
-      this.$refs.photo.click()
-    },
-
-    updatePhotoPreview() {
-      const photo = this.$refs.photo.files[0]
-
-      if (!photo) return
-
-      const reader = new FileReader()
-
-      reader.onload = (e) => {
-        this.photoPreview = e.target.result
-      }
-
-      reader.readAsDataURL(photo)
-    },
-
-    deletePhoto() {
-      this.$inertia.delete(route('current-user-photo.destroy'), {
-        preserveScroll: true,
-        onSuccess: () => {
-          this.photoPreview = null
-          this.clearPhotoFileInput()
-        }
-      })
-    },
-
-    clearPhotoFileInput() {
-      if (this.$refs.photo?.value) {
-        this.$refs.photo.value = null
-      }
-    }
-  }
+  props: ['user', 'initialCountries', 'initialCities', 'initialCategories']
 })
 </script>

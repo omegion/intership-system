@@ -24,6 +24,8 @@
       </action-message>
 
       <el-button
+        type="black"
+        class="text-xs tracking-widest uppercase"
         :class="({ 'opacity-45': form.processing }, 'submit')"
         :loading="form.processing"
         native-type="submit"

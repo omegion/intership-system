@@ -35,7 +35,7 @@
         <InputError :message="form.errors.code" class="mt-2" />
       </div>
 
-      <!-- Code -->
+      <!-- Flag URL -->
       <div class="col-span-6 sm:col-span-4">
         <FormLabel
           for="flag_url"
@@ -58,6 +58,8 @@
       </action-message>
 
       <el-button
+        type="black"
+        class="text-xs tracking-widest uppercase"
         :class="({ 'opacity-45': form.processing }, 'submit')"
         :loading="form.processing"
         native-type="submit"

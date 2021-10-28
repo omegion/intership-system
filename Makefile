@@ -25,5 +25,7 @@ db-reset:
 	docker-compose run --rm artisan migrate:reset
 	docker-compose run --rm artisan migrate
 	docker-compose run --rm artisan db:seed --class RolePermissionSeeder -vvv
+	docker-compose run --rm artisan db:seed --class SettingSeeder -vvv
 	docker-compose run --rm artisan db:seed --class CountrySeeder -vvv
 	docker-compose run --rm artisan db:seed --class CitySeeder -vvv
+	docker-compose run --rm artisan db:seed --class CompanyCategory -vvv

@@ -24,7 +24,11 @@
 
       <!-- Code -->
       <div class="col-span-6 sm:col-span-4">
-        <FormLabel for="code" value="Code" />
+        <FormLabel
+          for="code"
+          value="Code"
+          helper="Country code is universal shortage code of the country."
+        />
         <t-input
           id="code"
           type="text"
@@ -38,7 +42,11 @@
 
       <!-- Flag URL -->
       <div class="col-span-6 sm:col-span-4">
-        <FormLabel for="flag_url" value="Flag URL" />
+        <FormLabel
+          for="flag_url"
+          value="Flag URL"
+          helper="You can set a flag image for the country by defining a valid URL. You can use https://flagcdn.com to get free flags."
+        />
         <t-input
           id="flag_url"
           type="text"

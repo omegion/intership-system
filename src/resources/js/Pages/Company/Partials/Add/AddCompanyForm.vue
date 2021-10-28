@@ -1,5 +1,5 @@
 <template>
-  <t-form-section @submitted="storeCompany">
+  <t-form-section @submitted="store">
     <template #title>Company Information</template>
 
     <template #description>
@@ -24,20 +24,52 @@
 
       <!-- Email -->
       <div class="col-span-6 sm:col-span-4 pb-3">
-        <jet-label for="email" value="Email" />
-        <t-input
+        <FormLabel for="email" value="Email" />
+        <el-input
           id="email"
           type="email"
-          class="mt-1 block w-full"
           v-model="form.email"
           autocomplete="email"
           placeholder="example@company.com"
         />
-        <jet-input-error :message="form.errors.email" class="mt-2" />
+        <FormInputError :message="form.errors.email" class="mt-2" />
+      </div>
+
+      <!-- Phone -->
+      <div class="col-span-6 sm:col-span-4">
+        <FormLabel for="phone" value="Phone" />
+        <el-input
+          id="phone"
+          type="text"
+          v-model="form.phone"
+          placeholder="e.g. +49 70 700 7030"
+        />
+        <FormInputError :message="form.errors.phone" class="mt-2" />
+      </div>
+
+      <!-- Category -->
+      <div class="col-span-6 sm:col-span-4 pb-3">
+        <FormLabel for="email" value="Category" />
+        <CompanyCategorySearchAutocomplete
+          v-model="form.categories"
+          :initial-categories="initialCategories.data"
+        />
+
+        <FormInputError :message="form.errors.email" class="mt-2" />
+      </div>
+      <div class="col-span-2 pt-6 -ml-2">
+        <Link :href="route('company.category.create')">
+          <el-button type="text">
+            <span class="inline-flex">
+              <PlusIcon class="-ml-1 mt-0.5 mr-0.5 h-4 w-4" />
+              Add
+            </span>
+          </el-button>
+        </Link>
       </div>
     </template>
   </t-form-section>
-  <t-form-section @submitted="storeCompany" class="mt-8">
+  <t-form-section @submitted="store" class="mt-8">
     <template #title>Location Information</template>
 
     <template #description>
@@ -46,26 +78,58 @@
     </template>
 
     <template #form>
+      <!-- Address -->
+      <div class="col-span-6 sm:col-span-4">
+        <FormLabel for="address" value="Address" />
+        <el-input
+          id="address"
+          v-model="form.address"
+          type="textarea"
+          placeholder="e.g. Example street, 1016, Berlin"
+        />
+        <FormInputError :message="form.errors.address" class="mt-2" />
+      </div>
+
       <!-- Country -->
       <div class="col-span-6 sm:col-span-4">
-        <jet-label for="country" value="Country" />
+        <FormLabel for="country" value="Country" />
         <CountrySelectBox
           id="country"
           v-model="form.country_id"
           :initial-options="initialCountries"
         />
-        <jet-input-error :message="form.errors.country_id" class="mt-2" />
+        <FormInputError :message="form.errors.country_id" class="mt-2" />
+      </div>
+      <div class="col-span-2 pt-6 -ml-2">
+        <Link :href="route('location.country.create')">
+          <el-button type="text">
+            <span class="inline-flex">
+              <PlusIcon class="-ml-1 mt-0.5 mr-0.5 h-4 w-4" />
+              Add
+            </span>
+          </el-button>
+        </Link>
       </div>
 
       <!-- City -->
       <div class="col-span-6 sm:col-span-4">
-        <jet-label for="city" value="City" />
+        <FormLabel for="city" value="City" />
         <CitySelectBox
           id="city"
           v-model="form.city_id"
           :initial-options="initialCities"
         />
-        <jet-input-error :message="form.errors.city_id" class="mt-2" />
+        <FormInputError :message="form.errors.city_id" class="mt-2" />
+      </div>
+      <div class="col-span-2 pt-6 -ml-2">
+        <Link :href="route('location.city.create')">
+          <el-button type="text">
+            <span class="inline-flex">
+              <PlusIcon class="-ml-1 mt-0.5 mr-0.5 h-4 w-4" />
+              Add
+            </span>
+          </el-button>
+        </Link>
       </div>
     </template>
 
@@ -95,9 +159,17 @@ import JetActionMessage from '@/Components/Utils/ActionMessage.vue'
 import JetSecondaryButton from '@/Components/Utils/SecondaryButton.vue'
 import CountrySelectBox from '@/Components/Utils/CountrySelectBox'
 import CitySelectBox from '@/Components/Utils/CitySelectBox'
+import FormLabel from '@/Components/Utils/Label'
+import FormInputError from '@/Components/Utils/InputError'
+import CompanyCategorySearchAutocomplete from '@/Pages/Company/Partials/Edit/CategorySearchAutocomplete'
+import { PlusIcon } from '@heroicons/vue/solid'
+import { Link } from '@inertiajs/inertia-vue3'
 
 export default defineComponent({
   components: {
+    CompanyCategorySearchAutocomplete,
+    FormInputError,
+    FormLabel,
     CitySelectBox,
     CountrySelectBox,
     JetActionMessage,
@@ -106,10 +178,12 @@ export default defineComponent({
     TInput,
     JetInputError,
     JetLabel,
-    JetSecondaryButton
+    JetSecondaryButton,
+    PlusIcon,
+    Link
   },
 
-  props: ['user', 'initialCountries', 'initialCities'],
+  props: ['user', 'initialCountries', 'initialCities', 'initialCategories'],
 
   data() {
     return {
@@ -117,18 +191,18 @@ export default defineComponent({
         _method: 'POST',
         name: '',
         email: '',
+        phone: '',
+        address: '',
         country_id: '',
-        city_id: ''
-      }),
-
-      photoPreview: null
+        city_id: '',
+        categories: []
+      })
     }
   },
 
   methods: {
-    storeCompany() {
+    store() {
       this.form.post(route('company.store'), {
-        errorBag: 'storeCompany',
         preserveScroll: true
       })
     }

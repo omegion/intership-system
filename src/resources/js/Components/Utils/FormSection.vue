@@ -13,9 +13,13 @@
       <form @submit.prevent="$emit('submitted')">
         <div
           class="px-4 py-5 bg-white sm:p-6 shadow"
-          :class="
-            hasActions ? 'sm:rounded-tl-md sm:rounded-tr-md' : 'sm:rounded-md'
-          "
+          :class="[
+            { 'sm:rounded-tl-md sm:rounded-tr-md': hasActions && !topMerged },
+            { 'sm:rounded-md': !hasActions && !bottomMerged },
+            { 'sm:rounded-t-md': bottomMerged && !topMerged },
+            { 'rounded-b-none': bottomMerged },
+            { 'rounded-t-none border-t border-gray-100': topMerged }
+          ]"
         >
           <div class="grid grid-cols-6 gap-6">
             <slot name="form"></slot>
@@ -51,7 +55,16 @@ import JetSectionTitle from './SectionTitle.vue'
 export default defineComponent({
   name: 'FormSection',
   emits: ['submitted'],
-
+  props: {
+    topMerged: {
+      type: Boolean,
+      default: false
+    },
+    bottomMerged: {
+      type: Boolean,
+      default: false
+    }
+  },
   components: {
     JetSectionTitle
   },

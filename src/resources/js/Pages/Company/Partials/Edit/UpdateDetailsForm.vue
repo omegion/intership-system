@@ -1,5 +1,5 @@
 <template>
-  <t-form-section @submitted="updateCompanyInformation">
+  <FormSection @submitted="updateCompanyInformation">
     <template #title>Basic Information</template>
 
     <template #description>Update company's information.</template>
@@ -7,11 +7,10 @@
     <template #form>
       <!-- Name -->
       <div class="col-span-6 sm:col-span-4">
-        <jet-label for="name" value="Name" />
-        <t-input
+        <FormLabel for="name" value="Name" />
+        <el-input
           id="name"
           type="text"
-          class="mt-1 block w-full"
           v-model="form.name"
           autocomplete="name"
         />
@@ -19,27 +18,67 @@
       </div>
 
       <!-- Email -->
-      <div class="col-span-6 sm:col-span-4 pb-3">
-        <jet-label for="email" value="Email" />
-        <t-input
-          id="email"
-          type="email"
-          class="mt-1 block w-full"
-          v-model="form.email"
-        />
+      <div class="col-span-6 sm:col-span-4">
+        <FormLabel for="email" value="Email" />
+        <el-input id="email" type="email" v-model="form.email" />
         <InputError :message="form.errors.email" class="mt-2" />
       </div>
+
+      <!-- Phone -->
+      <div class="col-span-6 sm:col-span-4">
+        <FormLabel for="phone" value="Phone" />
+        <el-input
+          id="phone"
+          type="text"
+          v-model="form.phone"
+          placeholder="e.g. +49 70 700 7030"
+        />
+        <InputError :message="form.errors.phone" class="mt-2" />
+      </div>
+
+      <!-- Category -->
+      <div class="col-span-6 sm:col-span-4 pb-3">
+        <FormLabel for="email" value="Category" />
+        <CompanyCategorySearchAutocomplete
+          v-model="form.categories"
+          :initial-categories="initialCategories.data"
+        />
+
+        <InputError :message="form.errors.email" class="mt-2" />
+      </div>
+      <div class="col-span-2 pt-6 -ml-2">
+        <Link :href="route('company.category.create')">
+          <el-button type="text">
+            <span class="inline-flex">
+              <PlusIcon class="-ml-1 mt-0.5 mr-0.5 h-4 w-4" />
+              Add
+            </span>
+          </el-button>
+        </Link>
+      </div>
     </template>
-  </t-form-section>
-  <t-form-section @submitted="updateCompanyInformation" class="mt-8">
+  </FormSection>
+  <FormSection @submitted="updateCompanyInformation" class="mt-8">
     <template #title>Location Information</template>
 
     <template #description>Update company's location information.</template>
 
     <template #form>
+      <!-- Address -->
+      <div class="col-span-6 sm:col-span-4">
+        <FormLabel for="address" value="Address" />
+        <el-input
+          id="address"
+          v-model="form.address"
+          type="textarea"
+          placeholder="e.g. Example street, 1016, Berlin"
+        />
+        <InputError :message="form.errors.address" class="mt-2" />
+      </div>
+
       <!-- Country -->
       <div class="col-span-6 sm:col-span-4">
-        <jet-label for="country" value="Country" />
+        <FormLabel for="country" value="Country" />
         <CountrySelectBox
           id="country"
           v-model="form.country_id"
@@ -47,16 +86,36 @@
         />
         <InputError :message="form.errors.country_id" class="mt-2" />
       </div>
+      <div class="col-span-2 pt-6 -ml-2">
+        <Link :href="route('location.country.create')">
+          <el-button type="text">
+            <span class="inline-flex">
+              <PlusIcon class="-ml-1 mt-0.5 mr-0.5 h-4 w-4" />
+              Add
+            </span>
+          </el-button>
+        </Link>
+      </div>
 
       <!-- City -->
       <div class="col-span-6 sm:col-span-4">
-        <jet-label for="city" value="City" />
+        <FormLabel for="city" value="City" />
         <CitySelectBox
           id="city"
           v-model="form.city_id"
           :initial-options="initialCities"
         />
         <InputError :message="form.errors.city_id" class="mt-2" />
+      </div>
+      <div class="col-span-2 pt-6 -ml-2">
+        <Link :href="route('location.city.create')">
+          <el-button type="text">
+            <span class="inline-flex">
+              <PlusIcon class="-ml-1 mt-0.5 mr-0.5 h-4 w-4" />
+              Add
+            </span>
+          </el-button>
+        </Link>
       </div>
     </template>
 
@@ -65,43 +124,50 @@
         <ActionSuccessMessage />
       </action-message>
 
-      <Button
+      <el-button
         :class="{ 'opacity-45': form.processing }"
+        type="black"
+        native-type="submit"
+        class="text-xs tracking-widest uppercase"
         :loading="form.processing"
       >
         Save
-      </Button>
+      </el-button>
     </template>
-  </t-form-section>
+  </FormSection>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
-import Button from '@/Components/Utils/Button.vue'
-import TFormSection from '@/Components/Utils/FormSection.vue'
-import TInput from '@/Components/Utils/Input.vue'
 import InputError from '@/Components/Utils/InputError.vue'
-import JetLabel from '@/Components/Utils/Label.vue'
 import ActionMessage from '@/Components/Utils/ActionMessage.vue'
 import ActionSuccessMessage from '@/Components/Utils/ActionSuccessMessage'
 import CountrySelectBox from '@/Components/Utils/CountrySelectBox'
 import CitySelectBox from '@/Components/Utils/CitySelectBox'
+import FormLabel from '@/Components/Utils/Label'
+import FormSection from '@/Components/Utils/FormSection'
+import Autocomplete from '@/Components/Utils/Autocomplete'
+import CompanyCategorySearchAutocomplete from '@/Pages/Company/Partials/Edit/CategorySearchAutocomplete'
+import { PlusIcon } from '@heroicons/vue/solid'
+import { Link } from '@inertiajs/inertia-vue3'
 
 export default defineComponent({
   name: 'UpdateDetailsForm',
   components: {
+    CompanyCategorySearchAutocomplete,
+    PlusIcon,
+    Autocomplete,
+    FormSection,
+    FormLabel,
     CitySelectBox,
     CountrySelectBox,
     ActionSuccessMessage,
     ActionMessage,
-    Button,
-    TFormSection,
-    TInput,
-    InputError,
-    JetLabel
+    Link,
+    InputError
   },
 
-  props: ['company', 'initialCountries', 'initialCities'],
+  props: ['company', 'initialCountries', 'initialCities', 'initialCategories'],
 
   data() {
     return {
@@ -109,8 +175,11 @@ export default defineComponent({
         _method: 'PUT',
         name: this.company.name,
         email: this.company.email,
+        phone: this.company.phone,
+        address: this.company.address,
         country_id: this.company.country_id,
-        city_id: this.company.city_id
+        city_id: this.company.city_id,
+        categories: this.company.category_ids
       })
     }
   },
@@ -121,7 +190,8 @@ export default defineComponent({
         errorBag: 'updateCompanyInformation',
         preserveScroll: true
       })
-    }
+    },
+    searchInCategory() {}
   }
 })
 </script>

@@ -1,6 +1,6 @@
 <template>
   <Autocomplete
-    v-model="modelValue"
+    v-model="value"
     :options="options"
     :loading="loading"
     :fetch="remoteMethod"
@@ -24,6 +24,7 @@ export default defineComponent({
   props: ['modelValue', 'initialOptions'],
   data() {
     return {
+      value: this.modelValue,
       loading: false,
       options: this.initialOptions
     }

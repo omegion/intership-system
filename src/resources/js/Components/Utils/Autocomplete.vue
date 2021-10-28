@@ -3,24 +3,19 @@
     v-model="value"
     filterable
     remote
-    reserve-keyword
+    :collapse-tags="collapseTags"
     :placeholder="placeholder"
     :remote-method="fetch"
     :loading="loading"
     :clearable="true"
-    @change="$emit('change', $event)"
+    :allow-create="allowCreate"
+    :multiple="multiple"
+    @change="change"
     @clear="$emit('clear', $event)"
     :no-data-text="noDataText"
     :reserve-keyword="false"
-    class="
-      border-gray-300
-      focus:border-indigo-300
-      focus:ring
-      focus:ring-indigo-200
-      focus:ring-opacity-50
-      rounded-md
-      shadow-sm
-    "
+    :automatic-dropdown="false"
+    :multiple-limit="multipleLimit"
   >
     <el-option
       v-for="item in options"
@@ -30,14 +25,30 @@
     >
       <slot name="option" v-bind:option="item" />
     </el-option>
+    <div
+      class="
+        flex flex-col
+        px-6
+        py-4
+        mt-2
+        text-sm
+        font-medium
+        bg-gray-50
+        text-gray-500 text-center
+        sm:rounded-bl-md sm:rounded-br-md
+      "
+    >
+      start typing for more results
+    </div>
   </el-select>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'Autocomplete',
+  components: {},
   props: {
     modelValue: {},
     fetch: {
@@ -59,14 +70,34 @@ export default defineComponent({
     noDataText: {
       type: String,
       required: true
+    },
+    allowCreate: {
+      type: Boolean,
+      required: false
+    },
+    multiple: {
+      type: Boolean,
+      required: false
+    },
+    collapseTags: {
+      type: Boolean,
+      required: false
+    },
+    multipleLimit: {
+      type: Number,
+      required: 0
     }
   },
-  emits: ['change', 'clear'],
-  setup(props) {
-    const value = ref(props.modelValue)
-
+  emits: ['update:modelValue', 'change', 'clear', 'loadMore'],
+  data() {
     return {
-      value
+      value: this.modelValue
+    }
+  },
+  methods: {
+    change(event) {
+      this.$emit('update:modelValue', event)
+      this.$emit('change', event)
     }
   }
 })

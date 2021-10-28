@@ -25,8 +25,8 @@
 }
 
 .el-button {
-    &.submit {
-        @apply uppercase tracking-widest bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white hover:bg-gray-700
+    &--black {
+        @apply border-transparent text-sm font-medium text-white bg-black hover:bg-gray-700 focus:outline-none #{!important}
     }
 
     &--primary {
@@ -39,6 +39,10 @@
 
     &--danger {
         @apply border-transparent text-sm font-medium text-white bg-red-600 hover:bg-red-500 focus:outline-none focus:ring-red-500 #{!important};
+    }
+
+    &--text {
+        @apply border-transparent text-sm text-blue-600 shadow-none hover:bg-transparent hover:text-blue-800 #{!important};
     }
 }
 
@@ -95,9 +99,37 @@
 }
 
 // INPUT
-.el-input {
-    .el-input__inner {
+.el-input, .el-textarea {
+    &.is-focus {
+        .el-input__inner {
+            @apply ring-1 ring-indigo-500 border-indigo-500 #{!important}
+        }
+    }
+
+    .el-input__inner, .el-textarea__inner {
         @apply border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 rounded-md shadow block w-full
     }
+
 }
 
+
+// SELECT
+.el-select {
+    .is-focus {
+        .el-input__inner {
+            @apply ring-1 ring-indigo-500 border-indigo-500 #{!important}
+        }
+    }
+
+    .el-select__input {
+        @apply ml-1 ring-0 border-0 #{!important}
+    }
+
+
+}
+
+.el-select-dropdown {
+    &__list {
+        @apply mb-0 #{!important}
+    }
+}

@@ -20,12 +20,15 @@
         <ActionSuccessMessage />
       </action-message>
 
-      <Button
+      <el-button
+        class="text-xs tracking-widest uppercase"
         :class="{ 'opacity-45': form.processing }"
+        type="black"
+        native-type="submit"
         :loading="form.processing"
       >
         Save
-      </Button>
+      </el-button>
     </template>
   </t-form-section>
 </template>

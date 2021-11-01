@@ -12,14 +12,14 @@ const tailwindcss = require('tailwindcss')
  */
 
 mix
+
   .js('resources/js/app.js', 'public/js')
   .vue()
   .sass('resources/sass/tailwind.scss', 'public/css')
+  .webpackConfig(require('./webpack.config'))
   .options({
     postCss: [tailwindcss('./tailwind.config.js')]
   })
-  .webpackConfig(require('./webpack.config'))
-
 mix.sass('resources/sass/app.scss', 'public/css')
 
 if (mix.inProduction()) {

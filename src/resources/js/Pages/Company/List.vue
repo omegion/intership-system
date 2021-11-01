@@ -19,7 +19,6 @@
           />
         </div>
       </div>
-
       <div class="mt-4 lg:mt-0 col-auto">
         <h2 class="sr-only">Product information</h2>
         <p class="text-3xl text-gray-900">$192</p>

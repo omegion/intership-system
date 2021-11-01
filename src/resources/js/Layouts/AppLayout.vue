@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- This example requires Tailwind CSS v2.0+ -->
     <div class="fixed bottom-0 inset-x-0 pb-2 sm:pb-5">
       <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
         <div class="p-2 rounded-lg bg-indigo-600 shadow-lg sm:p-3">
@@ -102,9 +101,7 @@
     <div class="relative h-screen flex overflow-hidden bg-white">
       <sidebar />
 
-      <!-- Main column -->
       <div class="flex flex-col w-0 flex-1 overflow-hidden">
-        <!-- Search header -->
         <div
           class="
             relative
@@ -367,7 +364,7 @@
           <main>
             <flash-banner />
             <slot name="flash-banner" />
-            <div class="py-10 bg-gray-50 h-screen">
+            <div class="py-10 bg-gray-50 min-h-screen">
               <slot></slot>
             </div>
           </main>

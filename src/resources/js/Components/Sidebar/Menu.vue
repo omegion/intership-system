@@ -18,7 +18,7 @@
     <el-sub-menu index="1">
       <template #title>
         <span class="sub-menu-item">
-          <UsersIcon
+          <CollectionIcon
             class="
               text-gray-400
               group-hover:text-gray-500
@@ -31,8 +31,8 @@
           Internship
         </span>
       </template>
-      <el-menu-item index="Internship/Create">
-        <Link :href="route('internship.create')">Create</Link>
+      <el-menu-item index="Internship/List">
+        <Link :href="route('internship.list')">List</Link>
       </el-menu-item>
     </el-sub-menu>
     <el-sub-menu index="2" v-if="hasPermission('can-list-students')">
@@ -136,7 +136,8 @@ import {
   HomeIcon,
   LocationMarkerIcon,
   OfficeBuildingIcon,
-  UsersIcon
+  UsersIcon,
+  CollectionIcon
 } from '@heroicons/vue/outline'
 
 export default defineComponent({
@@ -147,7 +148,8 @@ export default defineComponent({
     HomeIcon,
     OfficeBuildingIcon,
     LocationMarkerIcon,
-    AdjustmentsIcon
+    AdjustmentsIcon,
+    CollectionIcon
   }
 })
 </script>

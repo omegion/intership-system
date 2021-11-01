@@ -49,13 +49,13 @@
 
       <!-- Category -->
       <div class="col-span-6 sm:col-span-4 pb-3">
-        <FormLabel for="email" value="Category" />
+        <FormLabel for="categories" value="Category" />
         <CompanyCategorySearchAutocomplete
           v-model="form.categories"
           :initial-categories="initialCategories.data"
         />
 
-        <FormInputError :message="form.errors.email" class="mt-2" />
+        <FormInputError :message="form.errors.categories" class="mt-2" />
       </div>
       <div class="col-span-2 pt-6 -ml-2">
         <Link :href="route('company.category.create')">

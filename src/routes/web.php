@@ -5,8 +5,8 @@ use App\Http\Controllers\CompanyActivityController;
 use App\Http\Controllers\CompanyCategoryController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CountryController;
-use App\Http\Controllers\SettingController;
 use App\Http\Controllers\InternshipController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -65,7 +65,14 @@ Route::middleware(['auth:sanctum', 'verified', 'role:admin,lecturer,student'])->
 
 Route::middleware(['auth:sanctum', 'verified', 'role:admin,lecturer,student'])->prefix('internship')->name('internship.')->group
 (function () {
-    Route::get('/create', [InternshipController::class, 'create'])->name('create');
+    Route::get('/list', [InternshipController::class, 'index'])->name('list');
+    Route::get('/{internship:id}', [InternshipController::class, 'show'])->name('show');
+    Route::get('/{internship:id}/pdf', [InternshipController::class, 'pdf'])->name('pdf');
+    Route::get('/{company:id}/internship-create', [InternshipController::class, 'create'])->name('create');
+    Route::post('/{company:id}/internship-create', [InternshipController::class, 'store'])->name('store');
+    Route::get('/{internship:id}/edit', [InternshipController::class, 'edit'])->name('edit');
+    Route::put('/{internship:id}/edit', [InternshipController::class, 'update'])->name('update');
+
 });
 
 Route::middleware(['auth:sanctum', 'verified', 'role:admin,lecturer'])->prefix('user')->name('user.')->group(function () {

@@ -1,9 +1,11 @@
 <template>
   <span class="hidden sm:block">
-    <Link :href="route('company.edit', { company: company.id })" class="px-2">
+    <Link
+      :href="route('internship.edit', { internship: internship.id })"
+      class="px-2"
+    >
       <t-button secondary type="href">Edit</t-button>
     </Link>
-    <t-button primary>Claim Intership</t-button>
   </span>
 </template>
 
@@ -14,8 +16,8 @@ import BaseIcon from '@/Components/Utils/BaseIcon'
 import { Link } from '@inertiajs/inertia-vue3'
 
 export default defineComponent({
-  name: 'HeaderActions',
+  name: 'InternshipHeaderActions',
   components: { BaseIcon, TButton, Link },
-  props: ['company']
+  props: ['internship']
 })
 </script>

@@ -167,8 +167,25 @@ class CompanyController extends Controller
         return redirect()->route('company.list');
     }
 
-
     public function destroy(Request $request, Company $company)
+    {
+        $company->delete();
+
+        $this->banner(sprintf("The company <strong>%s</strong> is deleted.", $company->name));
+
+        return $request->wantsJson()
+            ? new JsonResponse('', 200)
+            : redirect()->route('company.list');
+    }
+
+    public function internshipClaim(Request $request, Company $company)
+    {
+        return Inertia::render('Company/Internship/Create', [
+            'company' => $company,
+        ]);
+    }
+
+    public function internshipClaimStore(Request $request, Company $company)
     {
         $company->delete();
 

@@ -3,7 +3,12 @@
     <Link :href="route('company.edit', { company: company.id })" class="px-2">
       <t-button secondary type="href">Edit</t-button>
     </Link>
-    <t-button primary>Claim Intership</t-button>
+    <Link
+      :href="route('internship.create', { company: company.id })"
+      class="px-2"
+    >
+      <el-button type="primary">Claim Internship</el-button>
+    </Link>
   </span>
 </template>
 

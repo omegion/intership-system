@@ -27,7 +27,7 @@
       </Header>
     </template>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-      <CreateCategoryForm
+      <CreateInternshipForm
         :company="company"
         :initial-countries="initialCountries"
         :initial-cities="initialCities"
@@ -40,14 +40,14 @@
 import { defineComponent } from 'vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import { Link } from '@inertiajs/inertia-vue3'
-import CreateCategoryForm from '@/Pages/Company/Category/Partials/Create/CreateCategoryForm'
 import Header from '@/Pages/Company/Partials/Header'
+import CreateInternshipForm from '@/Pages/Internship/Partials/Create/CreateInternshipForm'
 
 export default defineComponent({
   props: ['company', 'initialCountries', 'initialCities'],
 
   components: {
-    CreateCategoryForm,
+    CreateInternshipForm,
     Link,
     AppLayout,
     Header

@@ -25,7 +25,7 @@ class InternshipController extends Controller
 
         $paginator = Internship::builder()
             ->allowedFilters([
-                AllowedFilter::exact('verified_at')->ignore(null),
+                AllowedFilter::exact('verified_at'),
                 AllowedFilter::exact('education_year')
             ])
             ->allowedSorts('created_at', 'verified_at');
@@ -48,7 +48,7 @@ class InternshipController extends Controller
         $initialCountries = Country::search('', $company->country_id);
         $initialCities = City::search('', $company->city_id);
 
-        return Inertia::render('Company/Internship/Create', [
+        return Inertia::render('Internship/Create', [
             'company' => $company,
             'initialCountries' => $initialCountries,
             'initialCities' => $initialCities,

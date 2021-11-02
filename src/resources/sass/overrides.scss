@@ -160,3 +160,11 @@
         @apply text-green-800 bg-green-100 border-green-300 #{!important}
     }
 }
+
+// COLLAPSE
+.el-collapse {
+    .el-collapse-item__header, .el-collapse-item__wrap {
+        background-color: inherit #{!important}
+    }
+}
+

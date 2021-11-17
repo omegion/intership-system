@@ -16,7 +16,7 @@ class Internship extends Model
     use HasFactory;
     use QueryBuilder;
 
-    protected array $fillable = [
+    protected $fillable = [
         'code',
         'education_year',
         'country_id',

@@ -12,7 +12,6 @@ const tailwindcss = require('tailwindcss')
  */
 
 mix
-
   .js('resources/js/app.js', 'public/js')
   .vue()
   .sass('resources/sass/tailwind.scss', 'public/css')
@@ -20,6 +19,7 @@ mix
   .options({
     postCss: [tailwindcss('./tailwind.config.js')]
   })
+
 mix.sass('resources/sass/app.scss', 'public/css')
 
 if (mix.inProduction()) {

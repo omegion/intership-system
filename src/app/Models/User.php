@@ -63,13 +63,13 @@ class User extends Authenticatable
     use TwoFactorAuthenticatable;
     use Permissions;
 
-    protected array $fillable = [
+    protected $fillable = [
         'name',
         'email',
         'password',
     ];
 
-    protected array $hidden = [
+    protected $hidden = [
         'password',
         'remember_token',
         'two_factor_recovery_codes',

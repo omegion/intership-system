@@ -10,7 +10,7 @@ class Country extends Model
 {
     use HasFactory;
 
-    protected array $fillable = [
+    protected $fillable = [
         'name',
         'slug',
         'code',

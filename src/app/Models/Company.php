@@ -8,36 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-/**
- * App\Models\Company
- *
- * @property int $id
- * @property string $name
- * @property string $email
- * @property int|null $creator_user_id
- * @property string|null $verified_at
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read mixed $is_verified
- * @property-read mixed $profile_photo_url
- * @method static \Illuminate\Database\Eloquent\Builder|Company newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Company newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Company query()
- * @method static \Illuminate\Database\Eloquent\Builder|Company whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Company whereCreatorUserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Company whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Company whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Company whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Company whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Company whereVerifiedAt($value)
- * @mixin \Eloquent
- */
 class Company extends Model
 {
     use HasFactory;
     use CompanyActivity;
 
-    protected array $fillable = [
+    protected $fillable = [
         'name',
         'email',
         'phone',

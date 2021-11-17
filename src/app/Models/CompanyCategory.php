@@ -10,7 +10,12 @@ class CompanyCategory extends Model
 {
     use HasFactory;
 
-    protected array $hidden = [
+  protected $fillable = [
+    'name',
+    'slug',
+  ];
+
+    protected $hidden = [
         'created_at',
         'updated_at',
         'pivot',

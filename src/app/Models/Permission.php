@@ -30,7 +30,7 @@ class Permission extends Model
 {
     use HasFactory;
 
-    protected array $hidden = [
+    protected $hidden = [
         'id',
         'created_at',
         'updated_at',

@@ -28,7 +28,7 @@
                   v-if="scope.row.is_verified"
                 >
                   <span>
-                    <badge-check-icon class="h-5 w-5 text-green-500" />
+                    <CheckCircleIcon class="h-5 w-5 text-green-500" />
                   </span>
                 </el-tooltip>
               </Link>
@@ -56,7 +56,7 @@ import { defineComponent } from 'vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import Pagination from '@/Components/Utils/Pagination'
 import { Link } from '@inertiajs/inertia-vue3'
-import { BadgeCheckIcon } from '@heroicons/vue/solid'
+import { CheckCircleIcon } from '@heroicons/vue/solid'
 import moment from 'moment'
 
 export default defineComponent({
@@ -66,7 +66,7 @@ export default defineComponent({
     AppLayout,
     Pagination,
     Link,
-    BadgeCheckIcon
+    CheckCircleIcon
   },
   created() {
     this.moment = moment

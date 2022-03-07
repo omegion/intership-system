@@ -26,17 +26,7 @@
       <slot name="option" v-bind:option="item" />
     </el-option>
     <div
-      class="
-        flex flex-col
-        px-6
-        py-4
-        mt-2
-        text-sm
-        font-medium
-        bg-gray-50
-        text-gray-500 text-center
-        sm:rounded-bl-md sm:rounded-br-md
-      "
+      class="flex flex-col px-6 py-4 mt-2 text-sm font-medium bg-gray-50 text-gray-500 text-center sm:rounded-bl-md sm:rounded-br-md"
     >
       start typing for more results
     </div>

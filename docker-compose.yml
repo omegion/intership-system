@@ -81,7 +81,7 @@ services:
     depends_on:
       - php
     user: ${PHPUSER:-www-data}
-    entrypoint: [ 'composer', '--ignore-platform-reqs' ]
+    entrypoint: [ 'composer' ]
     networks:
       - laravel
 

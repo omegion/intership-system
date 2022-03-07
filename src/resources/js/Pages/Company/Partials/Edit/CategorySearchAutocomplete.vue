@@ -4,7 +4,7 @@
     :options="options"
     :loading="loading"
     :fetch="remoteMethod"
-    multiple-limit="5"
+    :multiple-limit="5"
     collapse-tags
     multiple
     @change="$emit('update:modelValue', $event)"
@@ -51,7 +51,7 @@ export default defineComponent({
           })
         )
         .then((res) => {
-          this.options = res.data
+          this.options = res.data.data
         })
         .finally(() => {
           this.loading = false

@@ -8,7 +8,7 @@
     <el-table-column label="Flag" width="100">
       <template #default="scope">
         <img
-          class="w-10 h-7 bg-gray-300 rounded flex-shrink-0"
+          class="w-8 h-6 bg-gray-300 rounded flex-shrink-0"
           :src="getFlagURL(scope.row.flag_url, scope.row.name)"
           :alt="scope.row.name"
         />

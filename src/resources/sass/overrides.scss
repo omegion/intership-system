@@ -1,170 +1,172 @@
 // DIALOG
 .el-message-box {
-    padding-bottom: 0;
+  padding-bottom: 0;
 
-    @apply rounded-lg
+  @apply rounded-lg;
 }
 
 .el-message-box {
-    &__title {
-        @apply text-xl font-medium
-    }
+  &__title {
+    @apply text-xl font-medium;
+  }
 
-    &__btns {
-        @apply px-6 py-4 bg-gray-100 text-right;
-    }
+  &__btns {
+    @apply px-6 py-4 bg-gray-100 text-right;
+  }
 
-    &__content {
-        @apply p-4 py-6 text-base text-black
-    }
+  &__content {
+    @apply p-4 py-6 text-base text-black;
+  }
 }
 
 //BUTTON
 .el-button {
-    @apply inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:bg-gray-50 focus:border-gray-300 focus:text-gray-700
+  @apply inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:bg-gray-50 focus:border-gray-300 focus:text-gray-700;
 }
 
 .el-button {
-    &--black {
-        @apply border-transparent text-sm font-medium text-white bg-black hover:bg-gray-700 focus:outline-none #{!important}
-    }
+  &--black {
+    @apply border-transparent text-sm font-medium text-white bg-black hover:bg-gray-700 focus:outline-none #{!important};
+  }
 
-    &--primary {
-        @apply border-transparent text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none #{!important};
-    }
+  &--primary {
+    @apply border-transparent text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none #{!important};
+  }
 
-    &--success {
-        @apply border-transparent text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-green-500 #{!important};
-    }
+  &--success {
+    @apply border-transparent text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-green-500 #{!important};
+  }
 
-    &--danger {
-        @apply border-transparent text-sm font-medium text-white bg-red-600 hover:bg-red-500 focus:outline-none focus:ring-red-500 #{!important};
-    }
+  &--danger {
+    @apply border-transparent text-sm font-medium text-white bg-red-600 hover:bg-red-500 focus:outline-none focus:ring-red-500 #{!important};
+  }
 
-    &--text {
-        @apply border-transparent text-sm text-blue-600 shadow-none hover:bg-transparent hover:text-blue-800 #{!important};
-    }
+  &--text {
+    @apply border-transparent text-sm text-blue-600 shadow-none hover:bg-transparent hover:text-blue-800 #{!important};
+  }
 }
 
 // MENU
 .el-menu {
-    background-color: inherit;
-    border-right: 0;
+  background-color: inherit;
+  border-right: 0;
 
-    .el-menu-item {
-        height: inherit;
-        padding: inherit;
+  .el-menu-item {
+    height: inherit;
+    padding: inherit;
 
-        &:hover {
-            background-color: inherit;
-        }
-
-        &.is-active {
-            a {
-                @apply bg-gray-200 text-gray-900
-            }
-        }
-
-        a {
-            @apply w-full hover:text-gray-900 hover:bg-gray-50 flex items-center px-3 py-2 my-1 text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500
-        }
+    &:hover {
+      background-color: inherit;
     }
 
+    &.is-active {
+      a {
+        @apply bg-gray-200 text-gray-900;
+      }
+    }
 
-    .el-sub-menu {
-        .el-menu-item {
-            padding: inherit;
-            height: inherit;
-        }
+    a {
+      @apply w-full hover:text-gray-900 hover:bg-gray-50 flex items-center px-3 py-2 my-1 text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500;
+    }
+  }
 
-        .el-sub-menu__title {
-            .sub-menu-item {
-                @apply w-full hover:text-gray-900 hover:bg-gray-50 flex items-center px-3 py-2 my-1 text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 transition
-            }
-        }
+  .el-sub-menu {
+    .el-menu-item {
+      padding: inherit;
+      height: inherit;
     }
 
     .el-sub-menu__title {
-        height: inherit;
-        padding: inherit;
-
-        &:hover {
-            background-color: inherit;
-        }
+      .sub-menu-item {
+        @apply w-full hover:text-gray-900 hover:bg-gray-50 flex items-center px-3 py-2 my-1 text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 transition;
+      }
     }
+  }
+
+  .el-sub-menu__title {
+    height: inherit;
+    padding: inherit;
+
+    &:hover {
+      background-color: inherit;
+    }
+  }
 }
 
 //POPOVER
 .el-popover {
-    @apply rounded-md border-gray-300 shadow #{!important}
+  @apply rounded-md border-gray-300 shadow #{!important};
 }
 
 // INPUT
-.el-input, .el-textarea {
-    &.is-focus {
-        .el-input__inner {
-            @apply ring-1 ring-indigo-500 border-indigo-500 #{!important}
-        }
+.el-input,
+.el-textarea {
+  &.is-focus {
+    .el-input__inner {
+      @apply ring-1 ring-indigo-500 border-indigo-500 #{!important};
     }
+  }
 
-    .el-input__inner, .el-textarea__inner {
-        @apply border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 rounded-md shadow block w-full
-    }
+  .el-input__inner,
+  .el-textarea__inner {
+    @apply border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 rounded-md shadow block w-full;
+  }
+}
+
+.el-input__inner {
+  border: inherit;
 }
 
 .el-date-editor {
-    &.is-active {
-        &.el-input__inner {
-            @apply ring-1 ring-indigo-500 #{!important}
-        }
-    }
-
+  &.is-active {
     &.el-input__inner {
-        @apply border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 rounded-md shadow w-full
+      @apply ring-1 ring-indigo-500 #{!important};
     }
+  }
 
-    .el-range-separator {
-        @apply w-6
-    }
+  &.el-input__inner {
+    @apply border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 rounded-md shadow w-full;
+  }
+
+  .el-range-separator {
+    @apply w-6;
+  }
 }
 
 .el-picker__popper {
-    @apply shadow #{!important}
+  @apply shadow #{!important};
 }
-
 
 // SELECT
 .el-select {
-    .is-focus {
-        .el-input__inner {
-            @apply ring-1 ring-indigo-500 border-indigo-500 #{!important}
-        }
+  .is-focus {
+    .el-input__inner {
+      @apply ring-1 ring-indigo-500 border-indigo-500 #{!important};
     }
+  }
 
-    .el-select__input {
-        @apply ml-1 ring-0 border-0 #{!important}
-    }
-
-
+  .el-select__input {
+    @apply ml-1 ring-0 border-0 #{!important};
+  }
 }
 
 .el-select-dropdown {
-    &__list {
-        @apply mb-0 #{!important}
-    }
+  &__list {
+    @apply mb-0 #{!important};
+  }
 }
 
 // TAG
 .el-tag {
-    &--success {
-        @apply text-green-800 bg-green-100 border-green-300 #{!important}
-    }
+  &--success {
+    @apply text-green-800 bg-green-100 border-green-300 #{!important};
+  }
 }
 
 // COLLAPSE
 .el-collapse {
-    .el-collapse-item__header, .el-collapse-item__wrap {
-        background-color: inherit #{!important}
-    }
+  .el-collapse-item__header,
+  .el-collapse-item__wrap {
+    background-color: inherit #{!important};
+  }
 }
-
